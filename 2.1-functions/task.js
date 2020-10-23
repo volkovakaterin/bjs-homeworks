@@ -33,34 +33,30 @@ function showSolutionsMessage( a, b, c ){
 //Задание 2
 function getAverageScore(data){
    let average = 0;
-   let averageMarks;
-   //if (data.length < 10){
-   for(let prop in data){
-      averageMarks = {prop : getAverageMark(data[prop])}     
-       }
-         console.log(averageMarks);
-      }
-   /*for(let prop in averageMarks){
-      for (let i = 0; i < averageMarks.length; i++){   
-      average = average + averageMarks[prop][i];
-      console.log(averageMarks[prop][i]);
-      }
-      average = average / averageMarks.length; 
-      } */        
-   
-   function getAverageMark(marks){
-      let averageMark = 0;
-       
-       if (marks.length === 0){
-       return averageMark
-       }
-       else { 
-       for (let i = 0; i < marks.length; i++){
-       averageMark = averageMark + marks[i];
-       }
-       averageMark = averageMark / marks.length;
-        return averageMark;
-       }
+   let averageMarks = {};
+   for (let prop in data){
+      averageMarks[prop] = getAverageMark(data[prop]);    
    }
+   for (let prop in averageMarks){   
+      average = average + averageMarks[prop];
+   }
+   average = average / Object.keys(averageMarks).length;
+   averageMarks.average = average;
+   console.log(averageMarks);
+}
+
+function getAverageMark(marks){
+   let averageMark = 0;
+   if (marks.length === 0){
+      return averageMark
+   }
+   else { 
+      for (let i = 0; i < marks.length; i++){
+      averageMark = averageMark + marks[i];
+      }
+      averageMark = averageMark / marks.length;
+      return averageMark;
+   }
+}
 
 
