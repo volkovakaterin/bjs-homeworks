@@ -1,28 +1,28 @@
 //Задание 1
-function getSolutions( a, b, c ){
-   let D = Math.pow(b, 2) - 4*a*c;
-   if (D < 0){
-    return { D, roots: [] };
+function getSolutions(a, b, c) {
+   let D = Math.pow(b, 2) - 4 * a * c;
+   if (D < 0) {
+      return { D, roots: [] };
    }
-   else if (D === 0){
-      let x1 = -b / 2*a;
+   else if (D === 0) {
+      let x1 = -b / 2 * a;
       return { D, roots: [x1] };
    }
    else {
-     let x1 = (-b + Math.sqrt(D)) / (2*a);
-       let x2 = (-b - Math.sqrt(D)) / (2*a);
-       return { D, roots: [x1,x2] }
+      let x1 = (-b + Math.sqrt(D)) / (2 * a);
+      let x2 = (-b - Math.sqrt(D)) / (2 * a);
+      return { D, roots: [x1, x2] }
    }
 }
 
-function showSolutionsMessage( a, b, c ){
+function showSolutionsMessage(a, b, c) {
    let result = getSolutions(a, b, c);
    console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}`);
    console.log(`Значение дискриминанта: ${result.D}`);
-   if (result.D < 0){
+   if (result.D < 0) {
       console.log(`Уравнение не имеет вещественных корней`);
    }
-   else if (result.D === 0){
+   else if (result.D === 0) {
       console.log(`Уравнение имеет один корень X₁ = ${result.roots[0]}`);
    }
    else {
@@ -31,32 +31,38 @@ function showSolutionsMessage( a, b, c ){
 }
 
 //Задание 2
-function getAverageScore(data){
-   let average = 0;
-   let averageMarks = {};
-   for (let prop in data){
-      averageMarks[prop] = getAverageMark(data[prop]);    
+let diary = {};
+class StudentLog {
+   constructor(name) {
+      this.name = name;
    }
-   for (let prop in averageMarks){   
-      average = average + averageMarks[prop];
+   getName() {
+      return this.name;
    }
-   average = average / Object.keys(averageMarks).length;
-   averageMarks.average = average;
-   console.log(averageMarks);
-}
-
-function getAverageMark(marks){
-   let averageMark = 0;
-   if (marks.length === 0){
-      return averageMark
-   }
-   else { 
-      for (let i = 0; i < marks.length; i++){
-      averageMark = averageMark + marks[i];
+   addGrade(grade, subject) {
+      if (diary[subject] === undefined) {
+         diary[subject] = [];
       }
-      averageMark = averageMark / marks.length;
-      return averageMark;
+      if (grade >= 1 && grade <= 5) {
+         diary[subject].push(grade);
+      }
+      else {
+         console.log(`Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`)
+      }
+      return diary[subject].length;
+   }
+   getAverageBySubject(subject) {
+      let averageGrade = 0;
+      if (diary[subject].length === 0) {
+         return averageGrade;
+      }
+      else {
+         for (let i = 0; i < diary[subject].length; i++) {
+            averageGrade = averageGrade + diary[subject][i];
+         }
+         averageGrade = averageGrade / diary[subject].length;
+         return averageGrade;
+      }
    }
 }
-
 
