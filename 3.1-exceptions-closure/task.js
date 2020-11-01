@@ -46,6 +46,6 @@ function getTriangle(a, b, c) {
     } catch {
         console.log('Ошибка! Треугольник не существует');
     }
-    delete new Triangle().triangleRuleCheck;
+    delete new Triangle().triangleRule();
     return new Triangle(a, b, c);
 }
