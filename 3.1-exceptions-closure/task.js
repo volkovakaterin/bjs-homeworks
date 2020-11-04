@@ -8,11 +8,10 @@ function parseCount(a) {
 }
 function validateCount(a) {
     try {
-        parseCount(a);
+        return parseCount(a);
     } catch {
         return 'Невалидное значение';
     }
-    return parseCount(a);
 }
 
 //Задача 2
@@ -21,12 +20,11 @@ class Triangle {
         this.a = a;
         this.b = b;
         this.c = c;
-        this.P = this.a + this.b + this.c;
-        this.triangleRuleCheck = console.log(this.triangleRule());
-    }
-    triangleRule() {
-        if (this.a + this.b < this.c || this.a + this.c < this.b || this.b + this.c < this.a) {
-            throw new Error('Треугольник с такими сторонами не существует')
+        this.P = a + b + c;
+        this.triangleRule = function () {
+            if (a + b < c || a + c < b || b + c < a) {
+                throw new Error('Треугольник с такими сторонами не существует');
+            }
         }
     }
     getPerimeter() {
@@ -44,8 +42,13 @@ function getTriangle(a, b, c) {
     try {
         return new Triangle(a, b, c);
     } catch {
-        console.log('Ошибка! Треугольник не существует');
+        const TriangleFake = {
+            getPerimeter() {
+                return 'Ошибка! Треугольник не существует';
+            },
+            getArea() {
+                return 'Ошибка! Треугольник не существует';
+            }
+        }
     }
-    delete new Triangle().triangleRule();
-    return new Triangle(a, b, c);
 }
