@@ -1,28 +1,27 @@
 class PrintEditionItem {
-    constructor(name, releaseDate, pagesCount, state, type) {
+    constructor(name, releaseDate, pagesCount, state = 100, type = null) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
-        this.state = 100;
-        this.type = null;
+        this._state = state;
+        this.type = type;
     }
     fix() {
-        this.state = this.state * 1.5;
-        return this.state;
+        this._state *= 1.5;
+        return this._state;
     }
-    set getNewState(state) {
-        if (state < 0) {
-            this.state = 0;
+    get state() {
+        return this._state;
+    }
+    set state(st) {
+        if (st < 0) {
+            this._state = 0;
         }
-        else if (state > 100) {
-            this.state = 100;
+        else if (st > 100) {
+            this._state = 100;
         }
     }
-    get getNewState() {
-        return this.state
-    }
-}
-
+};
 class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount, state) {
         super(name, releaseDate, pagesCount, state);
@@ -31,17 +30,29 @@ class Magazine extends PrintEditionItem {
 };
 class Book extends PrintEditionItem {
     constructor(author, name, releaseDate, pagesCount, state) {
-        super(name, releaseDate, pagesCount, state);
+        super(name, releaseDate, pagesCount, state,);
         this.author = author;
         this.type = "book";
     }
 };
 
 class NovelBook extends Book {
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state)
+        this.type = "novel";
+    }
 };
 class FantasticBook extends Book {
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state)
+        this.type = "fantastic";
+    }
 };
 class DetectiveBook extends Book {
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state)
+        this.type = "detective";
+    }
 };
 
 //Задача 2
@@ -51,7 +62,7 @@ class Library {
         this.books = [];
     }
     addBook(book) {
-        if (book.state > 30) {
+        if (book._state > 30) {
             this.books.push(book);
         }
     }
@@ -59,7 +70,8 @@ class Library {
         let findBook = null;
         for (let key in this.books) {
             if (this.books[key][type] === value) {
-                findBook = this.books[key].name;
+                findBook = this.books[key];
+                return findBook;
             }
         }
         return findBook;
@@ -67,9 +79,10 @@ class Library {
     giveBookByName(bookName) {
         let giveBook = null;
         for (let key in this.books) {
-            if (this.books[key][name] === bookName) {
-                giveBook = this.books[key][name];
+            if (this.books[key]['name'] === bookName) {
+                giveBook = this.books[key];
                 this.books.splice(this.books[key], 1);
+                return giveBook;
             }
         }
         return giveBook;
