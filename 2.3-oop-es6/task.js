@@ -3,21 +3,21 @@ class PrintEditionItem {
         this.name = name;
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
-        this._state = state;
+        this.state = state;
         this.type = type;
     }
     fix() {
-        this._state *= 1.5;
-        return this._state;
+        this.state *= 1.5;
+        return this.state;
     }
     get state() {
         return this._state;
     }
-    set state(st) {
-        if (st < 0) {
+    set state(state) {
+        if (state < 0) {
             this._state = 0;
         }
-        else if (st > 100) {
+        else if (state > 100) {
             this._state = 100;
         }
     }
@@ -62,7 +62,7 @@ class Library {
         this.books = [];
     }
     addBook(book) {
-        if (book._state > 30) {
+        if (book.state > 30) {
             this.books.push(book);
         }
     }
@@ -90,6 +90,7 @@ class Library {
 }
 
 //Задача 3
+
 let diary = {};
 class StudentLog {
     constructor(name) {
@@ -112,7 +113,7 @@ class StudentLog {
     }
     getAverageBySubject(subject) {
         let averageGrade = 0;
-        if (diary[subject].length === 0) {
+        if (diary[subject] === undefined) {
             return averageGrade;
         }
         else {
@@ -122,6 +123,19 @@ class StudentLog {
             averageGrade = averageGrade / diary[subject].length;
             return averageGrade;
         }
+    }
+    getTotalAverage() {
+        let totalAverage = 0;
+        if (Object.keys(diary).length === 0) {
+            return totalAverage;
+        }
+        else {
+            for (let prop in diary) {
+                totalAverage += this.getAverageBySubject(prop);
+            }
+        }
+        totalAverage = totalAverage / Object.keys(diary).length;
+        console.log(totalAverage)
     }
 }
 
