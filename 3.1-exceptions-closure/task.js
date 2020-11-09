@@ -10,12 +10,13 @@ function validateCount(a) {
     try {
         return parseCount(a);
     } catch(e) {
-        return 'Невалидное значение';
+        return(e);
     }
 }
 
 //Задача 2
-function Triangle(a, b, c) {
+class Triangle {
+    constructor(a, b, c) {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -23,11 +24,12 @@ function Triangle(a, b, c) {
             if (a + b < c || a + c < b || b + c < a) {
                 throw new Error('Треугольник с такими сторонами не существует');  
         }
+    }
     
-    this.getPerimeter = function() {
+    getPerimeter() {
         return this.P;
     }
-    this.getArea = function() {
+    getArea() {
         let p = this.P / 2;
         let S = Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c));
         S = S.toFixed(3);
@@ -40,13 +42,9 @@ function getTriangle(a, b, c) {
     try {
         return new Triangle(a, b, c);
     } catch(e) {
-        return TriangleFake = {
-            getPerimeter: function() {
-                 return 'Ошибка! Треугольник не существует';
-            },
-            getArea: function() {
-                 return 'Ошибка! Треугольник не существует';
-            }
+        return {
+            getPerimeter: () => 'Ошибка! Треугольник не существует',  
+            getArea: () => 'Ошибка! Треугольник не существует',
         }
     }
 }
