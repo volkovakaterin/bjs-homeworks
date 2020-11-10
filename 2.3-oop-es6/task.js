@@ -20,6 +20,9 @@ class PrintEditionItem {
         else if (state > 100) {
             this._state = 100;
         }
+        else {
+            this._state = state;
+        }
     }
 };
 class Magazine extends PrintEditionItem {
